@@ -1,0 +1,7 @@
+django 
+dj_database_url
+whitenoise
+social-auth-app-django
+django-sslserver
+mysqlclient
+instamojo_wrapper

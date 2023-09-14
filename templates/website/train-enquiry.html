@@ -1,0 +1,45 @@
+{% extends '../base.html' %}
+
+{% block title %} Train Enquiry {% endblock %}
+
+{% block navbar-train-enquiry %}class="active"{% endblock %}
+{% block navbar-train-search %}class="inactive"{% endblock %}
+{% block navbar-train-schedule %}class="inactive"{% endblock %}
+
+{% block banner %} main-banner inner {% endblock %}
+
+{% block content %}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item active">Train Enquiry</li>
+</ol>
+
+<!--/ab -->
+<section class="about py-md-5 py-5">
+    <div class="container-fluid">
+        <div class="feature-grids row px-3 justify-content-center">
+            <div class="col-lg-3 gd-bottom" onclick="window.location={% url 'train-search' %}">
+                <div class="bottom-gd row">
+                    <div class="icon-gd col-md-3 text-center"><span class="fa fa-train" aria-hidden="true"></span></div>
+                    <div class="icon-gd-info col-md-9">
+                        <h3 class="mb-2">TRAIN BETWEEN STATIONS</h3>
+                        <p>Find the trains between two stations</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 gd-bottom" onclick="window.location={% url 'train-schedule' %}">
+                <div class="bottom-gd row">
+                    <div class="icon-gd col-md-3 text-center"> <span class="fa fa-calendar" aria-hidden="true"></span></div>
+                    <div class="icon-gd-info col-md-9">
+                        <h3 class="mb-2">TRAIN SCHEDULE</h3>
+                        <p>Find the running schedule of any train</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- //ab -->
+
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends '../base.html' %}
+{% load train %}
+
+{% block title %} Train Schedule {% endblock %}
+
+{% block navbar-train-enquiry %}class="active"{% endblock %}
+{% block navbar-train-search %}class="inactive"{% endblock %}
+
+{% block banner %} main-banner inner {% endblock %}
+
+{% block content %}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item active">PNR Status</li>
+</ol>
+
+<!-- train schedule form -->
+<div class="section text-center py-5">
+    <div class="container">
+        <div style="margin-top:30px;" class="mainbox ">
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    <form id="train-schedule-form" class="form-horizontal" action="" method="post">
+                        {% csrf_token %}
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div class="message">
+                            <div class="alert alert-{{message.tags}} alert-dismissible text-center" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="$('.alert').remove()">&times;</button>
+                                {{message}}
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        <div class="form-group">
+                            <div class="container">
+                                <div class="row">
+                                    <label class="col-md-4 col-sm-4 col-xs-4 control-label pr-5"><b>PNR number:</b></label>
+                                    <div class="col-md-4 col-sm-4 col-xs-4">
+                                        <input type="text" class="form-control" name="pnr-no" placeholder="Enter PNR number" required="">
+                                    </div>
+                                    <!-- Button -->
+                                    <div class="col-md-4 col-sm-4 col-xs-4 controls">
+                                        <button type="submit" id="btn-train-schedule" class="btn active float-left">Get Details</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% if is_submit %}
+            <div class="panel panel-info">
+                <div style="padding-top:20px" class="panel-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-bordered">
+                                    <thead class="thead-blue">
+                                        <tr>
+                                            <th>Journey Date</th>
+                                            <th>Train no</th>
+                                            <th>Train name</th>
+                                            <th>Source Station</th>
+                                            <th>Destination Station</th>
+                                            <th>Seats Booked</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{ obj.journey_date}}</td>
+                                            <td>{{ obj.train_no_id }}</td>
+                                            <td>{{ obj.train_name }}</td>
+                                            <td>{{ obj.source }}</td>
+                                            <td>{{ obj.destination }}</td>
+                                            <td>{{ obj.seats }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<!--//train schedule form ends here-->
+{% endblock %}
+
+{% block script %}
+
+{% if messages %}
+{% for message in messages %}
+    window.setTimeout(function () {
+        $(".alert-{{message.tags}}").fadeTo(1000, 0).slideUp(500, function () {
+            $(this).remove();
+        });
+    }, 2000);
+{% endfor %}
+{% endif %}
+
+{% endblock %}

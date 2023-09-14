@@ -1,0 +1,135 @@
+{% extends '../base.html' %}
+{% load train %}
+
+{% block title %} Train Between Stations {% endblock %}
+
+{% block navbar-train-enquiry %}class="active"{% endblock %}
+{% block navbar-train-schedule %}class="inactive"{% endblock %}
+
+{% block banner %} main-banner inner {% endblock %}
+
+{% block content %}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'book-ticket' %}">Book Ticket</a></li>
+</ol>
+
+<!-- train between stations form -->
+<div class="section text-center py-5">
+    <div class="container-fluid">
+        <div style="margin-top:30px;" class="mainbox ">
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    <form id="train-search-form" class="form-horizontal" action="" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <div class="container">
+                                {% if messages %}
+                                {% for message in messages %}
+                                <div class="message">
+                                    <div class="alert alert-{{message.tags}} alert-dismissible text-center" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="$('.alert').remove()">&times;</button>
+                                        {{message}}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                                <div class="row mt-2">
+                                    <div class="col-md-1 col-sm-1 col-xs-1"></div>
+                                    <label class="col-md-4 col-sm-4 col-xs-4 control-label pr-5"><b>Source Station:</b></label>
+                                    <div class="col-md-4 col-sm-4 col-xs-4">
+                                        <input type="text" class="form-control" name="source" placeholder="Enter Source Station Name" required="">
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-1 col-sm-1 col-xs-1"></div>
+                                    <label class="col-md-4 col-sm-4 col-xs-4 control-label pr-5"><b>Destination Station:</b></label>
+                                    <div class="col-md-4 col-sm-4 col-xs-4">
+                                        <input type="text" class="form-control" name="destination" placeholder="Enter Destination Station Name" required="">
+                                    </div>
+                                </div>
+
+                                <div class="row mt-2">
+                                    <div class="col-md-1 col-sm-1 col-xs-1"></div>
+                                    <label class="col-md-4 col-sm-4 col-xs-4 control-label pr-5"><b>Date of Journey:</b></label>
+                                    <div class="col-md-4 col-sm-4 col-xs-4">
+                                        <input type="date" class="form-control" name="date_of_journey" placeholder="Enter Date of Journey" required="">
+                                    </div>
+                                </div>
+
+                                <div class="row mt-2">
+                                    <div class="col-md-1 col-sm-1 col-xs-1"></div>
+                                    <label class="col-md-4 col-sm-4 col-xs-4 control-label pr-5"><b>Number of Seats:</b></label>
+                                    <div class="col-md-4 col-sm-4 col-xs-4">
+                                        <input type="text" class="form-control" name="seats" placeholder="Enter the number of seats" required="">
+                                    </div>
+                                </div>
+                                
+                                <div class="row mt-4 justify-content-center">
+                                    <div class="col-md-4 col-sm-4 col-xs-4 controls">
+                                        <button type="submit" id="btn-train-search" class="btn active">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% if is_submit %}
+            <div class="row mt-2">
+                <div class="col-md-12">
+                    <table class="table table-bordered">
+                        <thead class="thead-blue">
+                            <tr>
+                                <th>S. No.</th>
+                                <th>Train number</th>
+                                <th>Train Name</th>
+                                <th>Seats Available</th>
+                                <th>Date</th>
+                                <th>Book</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for detail in details %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ detail.train_id }}</td>
+                                <td>{{ detail.train_name }}</td>
+                                <td>{{ detail.seats }}</td>
+                                <td>{{ detail.date }}</td>
+                                <td><form method="post" action="{% url 'book-ticket' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="train_id" value="{{detail.train_id}}">
+                                    <input type="hidden" name="train_seats" value="{{seats}}">
+                                    <input type="hidden" name="date" value="{{detail.date}}">
+                                    <input type="hidden" name="source" value="{{src}}">
+                                    <input type="hidden" name="destination" value="{{dest}}">
+                                    <button>Book me</button></td>
+                                </form>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<!--//train between stations form ends here-->
+{% endblock %}
+
+{% block script %}
+
+{% if messages %}
+{% for message in messages %}
+    window.setTimeout(function () {
+        $(".alert-{{message.tags}}").fadeTo(1000, 0).slideUp(500, function () {
+            $(this).remove();
+        });
+    }, 2000);
+{% endfor %}
+{% endif %}
+
+{% endblock %}

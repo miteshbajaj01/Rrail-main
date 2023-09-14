@@ -1,0 +1,132 @@
+{% extends '../base.html' %}
+
+{% block title %} Register {% endblock %}
+{% block navbar-register %}class="active"{% endblock %}
+
+{% block banner %} main-banner inner {% endblock %}
+
+{% block content %}
+
+<ol class="breadcrumb grey">
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item active">Register</li>
+</ol>
+
+<!-- login and register form -->
+<div class="register-form section text-center py-5">
+    <div class="container">
+        <div class="ban-buttons">
+            <a href="{% url 'login' %}" class="btn">Login</a>
+            <a href="{% url 'register' %}" class="btn active">Register</a>
+        </div>
+        <div id="signupbox" style=" margin-top:50px" class="mainbox registerbox">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">Register</div>
+                </div>
+                <div class="panel-body">
+                    <form id="signupform" class="form-horizontal" action="" method="post">
+                        {% csrf_token %}
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div class="message">
+                            <div class="alert alert-{{message.tags}} alert-dismissible text-center" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="$('.alert').remove()">&times;</button>
+                                {{message}}
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        <div class="form-group">
+                            <label class="col-md-3 col-sm-3 col-xs-3 control-label">Email:</label>
+                            <div class="col-md-9 col-sm-9 col-xs-9 form-75">
+                                <input type="email" class="form-control" name="email" placeholder="Enter Email Address" required="" value="{{ email }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                                <label class="col-md-3 col-sm-3 col-xs-3 control-label">Username:</label>
+                                <div class="col-md-9 col-sm-9 col-xs-9 form-75">
+                                    <input type="text" class="form-control" name="username" placeholder="Enter your username" required="" value="{{ username }}">
+                                </div>
+                            </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-sm-3 col-xs-3 control-label">First Name:</label>
+                            <div class="col-md-9 col-sm-9 col-xs-9 form-75">
+                                <input type="text" class="form-control" name="first_name" placeholder="Enter your first name" required="" value="{{ first_name }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-sm-3 col-xs-3 control-label">Last Name:</label>
+                            <div class="col-md-9 col-sm-9 col-xs-9 form-75">
+                                <input type="text" class="form-control" name="last_name" placeholder="Enter your last name" value="{{ last_name }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-sm-3 col-xs-3 control-label">Gender:</label>
+                            <div class="col-md-9 col-sm-9 col-xs-9 form-75">
+                                <select class="form-control" name="gender" required="" value="{{ gender }}">
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                    <option value="O">Others/Not Specified</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-sm-3 col-xs-3 control-label">Date of Birth:</label>
+                            <div class="col-md-9 col-sm-9 col-xs-9 form-75">
+                                <input type="date" class="form-control" name="date_of_birth" placeholder="Enter Date of Birth" required="" value="{{ date_of_birth }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-sm-3 col-xs-3 control-label">Password:</label>
+                            <div class="col-md-9 col-sm-9 col-xs-9 form-75">
+                                <input type="password" class="form-control" name="password1" placeholder="Enter the Password" required="" value="{{ password1 }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-sm-3 col-xs-3 control-label">Confirm&nbsp;Password:</label>
+                            <div class="col-md-9 col-sm-9 col-xs-9 form-75">
+                                <input type="password" class="form-control" name="password2" placeholder="Confirm your Password" required="" value="{{ password2 }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-sm-3 col-xs-3 control-label">Phone Number:</label>
+                            <div class="col-md-9 col-sm-9 col-xs-9 form-75">
+                                <input type="tel" class="form-control" name="phone_number" placeholder="Enter your mobile number" required="" value="{{ phone_number }}">
+                            </div>
+                        </div>
+                        <div class="form-group pb-5">
+                            <label class="col-md-3 col-sm-3 col-xs-3 control-label">Address:</label>
+                            <div class="col-md-9 col-sm-9 col-xs-9 form-75">
+                                <textarea class="form-control" name="address" placeholder="Enter your residential address" style="height: 100px;">{{ address }}</textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <!-- Button -->
+                            <div class="col-sm-12 controls">
+                                <button type="submit" id="btn-register" class="btn active" style="margin-top: 20px;">Register</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--//login and register form ends here-->
+{% endblock %}
+
+{% block script %}
+
+{% if messages %}
+{% for message in messages %}
+    window.setTimeout(function () {
+        $(".alert-{{message.tags}}").fadeTo(1000, 0).slideUp(500, function () {
+            $(this).remove();
+        });
+    }, 3000);
+{% endfor %}
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends '../base.html' %}
+
+{% block title %} Home {% endblock %}
+{% block navbar-home %}class="active"{% endblock %}
+
+{% block banner %} main-banner {% endblock %}
+
+{% block banner-info %}
+<!--/banner-->
+<div class="banner-info">
+    <h3 class="mb-4">Hola! this is your RailDost</h3>
+    <div class="ban-buttons">
+        <a href="https://www.irctc.co.in/nget/train-search" class="btn">Book Now</a>
+        <a href="{% url 'train-enquiry' %}" class="btn active bluebtn">Train Enquiry</a>
+    </div>
+</div>
+<!--// banner-inner -->
+{% endblock %}
+
+{% block css %}
+#clock {
+    background: #eee;
+}
+{% endblock %}
+
+{% block content %}
+
+    <!-- //ab -->
+    <!--/ab -->
+    <section class="about py-md-5 py-5">
+        <div class="container py-md-3">
+            <div class="feature-grids row">
+                <div class="col-md-4 gd-bottom mt-lg-4" onclick="window.location='https://www.indianrail.gov.in/enquiry/PNR/PnrEnquiry.html?locale=en'"">
+                    <div class="bottom-gd p-lg-5 p-4">
+                        <span class="fa fa-info" aria-hidden="true"></span>
+                        <h3 class="my-3">PNR STATUS</h3>
+                    </div>
+                </div>
+                <div class="col-md-4 gd-bottom mt-lg-4" onclick="window.location='https://www.irctc.co.in/nget/train-search'">
+                    <div class="bottom-gd p-lg-5 p-4">
+                        <span class="fa fa-train" aria-hidden="true"></span>
+                        <h3 class="my-3">TICKET BOOKING</h3>
+                    </div>
+                </div>
+                <div class="col-md-4 gd-bottom mt-lg-4" onclick="window.location={% url 'train-enquiry' %}">
+                    <div class="bottom-gd p-lg-5 p-4">
+                        <span class="fa fa-bullhorn" aria-hidden="true"></span>
+                        <h3 class="my-3">TRAIN ENQUIRY</h3>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- //ab -->
+{% endblock %}

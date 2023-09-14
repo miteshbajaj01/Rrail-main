@@ -1,0 +1,155 @@
+{% extends '../base.html' %}
+{% load profile %}
+
+{% block title %} My Profile {% endblock %}
+{% block navbar-profile %}class="active"{% endblock %}
+{% block navbar-logout %}class="inactive"{% endblock %}
+
+{% block banner %} main-banner inner {% endblock %}
+{% load static %}
+{% block content %}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item active">My Profile</li>
+</ol>
+
+<!-- ticket booking form -->
+<div class="container" style="padding-bottom:5%">
+    <div style="padding-left:20%; padding-right:20%; padding-bottom:2%">
+        <div class="row shadow p-3 mb-3 bg-white rounded" style="border: 1px solid whitesmoke;">
+            <!-- <div class="col-md-12">
+                <p align="right" style="font-size:15px"><i class="fa" style="color:#10adfb;">&#xf040;</i> <a href="{% url 'edit-profile' %}">Edit</a></p>  
+            </div> -->
+            {% if messages %}
+            {% for message in messages %}
+            <div class="col-md-12">
+                <div class="message">
+                    <div class="alert alert-{{message.tags}} alert-dismissible text-center" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="$('.alert').remove()">&times;</button>
+                        {{message}}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                            <div class="sm-3">&nbsp;</div>
+                            <div class="sm-6">
+                                <div style="text-align: center;"><h2>Welcome {{profile.first_name}} !!</h2></div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            
+            <table class="table table-borderless">
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td align="right" style="width:45%"><label>Name: </label></td>
+                        <td style="width:2%"></td>
+                        <td align="left" style="width:45%"><label>{{ profile.first_name }} {{ profile.last_name }}</label></td>
+                    </tr>
+                    <tr>
+                        <td align="right" style="width:45%"><label>Username: </label></td>
+                        <td></td>
+                        <td align="left" style="width:45%"><label>{{ profile.username }}</label></td>
+                    </tr>
+                    <tr>
+                        <td align="right" style="width:45%"><label>Email: </label></td>
+                        <td></td>
+                        <td align="left" style="width:45%"><label>{{ profile.email }}</label></td>
+                    </tr>
+                    <tr>
+                        <td align="right" style="width:45%"><label>Gender</label></td>
+                        <td></td>
+                        <td align="left" style="width:45%"><label>{{ profile.gender|get_full_gender }}</label></td>
+                    </tr>
+                    <tr>
+                        <td align="right" style="width:45%"><label>Date of Birth</label></td>
+                        <td></td>
+                        <td align="left" style="width:45%"><label>{{ profile.date_of_birth }}</label></td>
+                    </tr>
+                    <tr>
+                        <td align="right" style="width:45%"><label>Phone Number</label></td>
+                        <td></td>
+                        <td align="left" style="width:45%"><label>{{ profile.phone_number }}</label></td>
+                    </tr>
+                    <tr>
+                        <td align="right" style="width:45%"><label>Address</label></td>
+                        <td></td>
+                        <td align="left" style="width:45%"><label>{{ profile.address }}</label></td>
+                    </tr>
+                    <tr>
+                </tbody>
+            </table>
+            <div class="col-md-12">
+                <a>&nbsp;</a>
+            </div>  
+        </div>
+    </div>
+    <div align="center">
+        <button type="button" class="btn btn-primary btn-sm" data-target="#password_modal" data-toggle="modal">Change Password</button>
+        <a href="{% url 'bookings' %}">
+            <button type="button" class="btn btn-primary btn-sm" data-target="#password_modal" data-toggle="modal">My Bookings</button>
+        </a>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="password_modal" tabindex="-1" role="dialog" aria-labelledby="passwordModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg2"role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6>Change Password <span class="extra-title muted"></span></h6>
+            </div>
+            <form id="password-change-form" class="form-horizontal" action="" method="post">
+                <div class="modal-body form-horizontal" style="padding:0">
+                    <table align="center" cellpadding="10">
+                        {% csrf_token %}
+                        <tr>
+                            <td align="right">Old Password</td>
+                            <td><input type="password" class="form-control" id="oldpassword" name="oldpassword" placeholder="Enter Old Password" required></td>
+                        </tr>
+                        <tr>
+                            <td align="right">New Password</td>
+                            <td><input type="password" class="form-control" id="newpassword1" name="newpassword1" placeholder="Enter New Password" required></td>
+                        </tr>
+                        <tr>
+                            <td align="right">New Password Confirmation</td>
+                            <td><input type="password" class="form-control" id="newpassword2" name="newpassword2" placeholder="Confirm New Password" required></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true" style="background-color:grey; border-color: grey;">Close</a>
+                    <span>&nbsp;&nbsp;</span>
+                    <button type="submit" class="btn btn-primary btn-sm" id="password_modal_save">Save changes</button>
+                </div>
+            </form> 
+        </div>
+    </div>
+</div>
+
+<!--//ticket booking form ends here-->
+{% endblock %}
+
+{% block script %}
+
+{% if messages %}
+{% for message in messages %}
+    window.setTimeout(function () {
+        $(".alert-{{message.tags}}").fadeTo(1000, 0).slideUp(500, function () {
+            $(this).remove();
+        });
+    }, 2000);
+{% endfor %}
+{% endif %}
+
+{% endblock %}

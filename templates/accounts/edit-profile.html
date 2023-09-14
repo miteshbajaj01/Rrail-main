@@ -1,0 +1,65 @@
+{% extends '../base.html' %}
+
+{% block title %} My Profile {% endblock %}
+{% block navbar-profile %}class="active"{% endblock %}
+
+{% block banner %} main-banner inner {% endblock %}
+{% load static %}
+{% block content %}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'profile' %}">My Profile</a></li>
+    <li class="breadcrumb-item active">Edit Profile</li>
+</ol>
+
+<!-- ticket booking form -->
+<div class="container" style="padding-bottom:5%">
+    <div style="padding-left:20%; padding-right:20%; padding-bottom:2%">
+        <div class="row shadow p-3 mb-3 bg-white rounded" style="border: 1px solid whitesmoke;">
+            <div class="col-md-12">
+                <p>&nbsp;</p>  
+            </div>    
+            <table class="table table-borderless">
+                <tbody>
+                    <tr>
+                        <td align="right" style="width:45%"><label>Name</label></td>
+                        <td style="width:2%"></td>
+                        <td align="left" style="width:45%"><input type="text2" class="form-control-line" value="A Kumar"></td>
+                    </tr>
+                    <tr>
+                        <td align="right" style="width:45%"><label>Username</label></td>
+                        <td></td>
+                        <td align="left" style="width:45%"><label>23438</label></td>
+                    </tr>
+                    <tr>
+                        <td align="right" style="width:45%"><label>Email</label></td>
+                        <td></td>
+                        <td align="left" style="width:45%"><label>django_god@gmail.com</label></td>
+                    </tr>
+                    <tr>
+                        <td align="right" style="width:45%"><label>Mobile Number</label></td>
+                        <td></td>
+                        <td align="left" style="width:45%"><input type="text2" class="form-control-line" value="8888823438"></td>
+                    </tr>
+                    <tr>
+                </tbody>
+            </table>
+            <div class="col-md-12">
+                <a>&nbsp;</a>
+            </div>  
+        </div>
+    </div>
+    <table class="table table-borderless">
+        <tbody>
+            <tr>
+                <td align="right" style="width:50%;"><a href="{% url 'profile' %}" class="btn btn-primary btn-sm" style="background-color:grey; border-color: grey;">Cancel</a></td>
+                <td align="left"><button type="submit" class="btn btn-primary btn-sm">Save Changes</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!--//ticket booking form ends here-->
+{% endblock %}

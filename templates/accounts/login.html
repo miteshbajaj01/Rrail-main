@@ -1,0 +1,85 @@
+{% extends '../base.html' %}
+
+{% block title %} Login {% endblock %}
+{% block navbar-login %}class="active"{% endblock %}
+
+{% block banner %} main-banner inner {% endblock %}
+
+{% block content %}
+
+<ol class="breadcrumb grey">
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item active">Login</li>
+</ol>
+
+<!-- login and register form -->
+<div class="login-form section text-center py-5">
+    <div class="container">
+        <div class="ban-buttons">
+            <a href="{% url 'login' %}" class="btn active">Login</a>
+            <a href="{% url 'register' %}" class="btn">Register</a>
+        </div>
+        <div id="loginbox" style="margin-top:30px;" class="mainbox  loginbox">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">Login</div>
+                </div>
+                <div style="padding-top:30px" class="panel-body">
+                    <form id="loginform" class="form-horizontal" action="" method="post">
+                        {% csrf_token %}
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div class="message">
+                            <div class="alert alert-{{message.tags}} alert-dismissible text-center" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="$('.alert').remove()">&times;</button>
+                                {{message}}
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-user" style="margin: 10px 15px;"></i>
+                                    </span>
+                                    <input id="username" type="text" class="form-control" name="username" value="" placeholder="Username" required>
+                                </div>
+        
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-lock" style="margin: 10px 15px;"></i>
+                                    </span>
+                                    <input id="login-password" type="password" class="form-control" name="password" placeholder="Password" required>
+                                </div>
+        
+                                <div style="margin-top:10px" class="form-group">
+                                    <!-- Button -->
+                                    <div class="col-sm-12 controls">
+                                        <button type="submit" id="btn-login" class="btn active">Login </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--//login and register form ends here-->
+{% endblock %}
+
+{% block script %}
+
+{% if messages %}
+{% for message in messages %}
+    window.setTimeout(function () {
+        $(".alert-{{message.tags}}").fadeTo(1000, 0).slideUp(500, function () {
+            $(this).remove();
+        });
+    }, 2000);
+{% endfor %}
+{% endif %}
+
+{% endblock %}
